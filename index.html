@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ff8225">
+  <meta name="description" content="Bhakti Naad - Soulful Devotional Bhajans, Aartis and Chalisa for all deities.">
+  <meta property="og:site_name" content="Bhakti Naad">
+  <meta property="og:title" content="Bhakti Naad — Devotion for every soul">
+  <meta property="og:description" content="A devotional music experience featuring Shiva, Krishna, Ganesha, Rama, Hanuman and Durga.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪔</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>Bhakti Naad — Devotion for every soul</title>
+</head>
+<body>
+  <div class="experience" id="app" data-deity="ganesha">
+    <div class="background" aria-hidden="true">
+      <div class="background__layer background__layer--one is-active" id="artA"></div>
+      <div class="background__layer background__layer--two" id="artB"></div>
+      <div class="background__scrim"></div>
+      <div class="background__grain"></div>
+    </div>
+
+    <!-- Hidden YouTube Player Container -->
+    <div class="yt-host" aria-hidden="true"><div id="youtubePlayer"></div></div>
+
+    <header class="topbar">
+      <div class="clock" id="clockTime" aria-label="Current local time">--:-- --</div>
+
+      <div class="deity-selector-container">
+        <div class="deity-bar" id="deityBar" role="tablist" aria-label="Select Deity">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="top-controls">
+        <div class="presence" aria-live="polite">
+          <span class="presence__pulse" aria-hidden="true"><i></i></span>
+          <strong class="presence__count" id="listenerCount">108</strong>
+          <span id="listenerLabel">listening</span>
+        </div>
+        <button class="top-button top-button--info" id="aboutBtn" type="button" aria-label="About Bhakti Naad">i</button>
+        <button class="seva-button" id="sevaBtn" type="button" aria-label="Support this project">
+          <span class="seva-button__diya" aria-hidden="true"><i></i></span>
+          <span>Support</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="scene" id="swipeArea">
+      <div class="scene-content">
+        <section class="wordmark" aria-live="polite">
+          <p class="wordmark__eyebrow" id="manifestoLbl">विघ्नहर्ता और बुद्धि के दाता</p>
+          <h1 id="deityHindiName"><span>श्री गणेश</span></h1>
+          <p class="wordmark__english" id="deityEnglishName">Lord Ganesha</p>
+        </section>
+      </div>
+
+      <!-- Persistent Playlist Panel (Always Visible) -->
+      <section class="playlist persistent" id="trackList" aria-label="Deity Songs">
+        <div class="playlist__head">
+          <span id="listHeading">Ganesha Selections</span>
+        </div>
+        <ol id="trackListItems"></ol>
+      </section>
+
+      <div class="dock">
+        <!-- Sleep Timer Panel -->
+        <section class="sleep-timer" id="timerMenu" aria-hidden="true" aria-label="Sleep timer">
+          <div class="sleep-timer__head">
+            <span>Stop music after</span>
+            <button id="timerClose" type="button" aria-label="Close sleep timer">×</button>
+          </div>
+          <div class="sleep-timer__options">
+            <button type="button" data-timer-minutes="15">15 min</button>
+            <button type="button" data-timer-minutes="30">30 min</button>
+            <button type="button" data-timer-minutes="60">60 min</button>
+            <button class="sleep-timer__off" id="timerCancel" type="button" data-timer-minutes="0" disabled>Turn off timer</button>
+          </div>
+          <p id="timerStatus" aria-live="polite">No timer set</p>
+        </section>
+
+        <!-- Song Metadata context line -->
+        <div class="teaching-line">
+          <span id="trackForm">AARTI</span>
+          <button id="knowledgeBtn" type="button">Significance <b>＋</b></button>
+        </div>
+
+        <!-- Main Audio Player interface -->
+        <section class="player" id="player" aria-label="Devotional Player">
+          <div class="disc" aria-hidden="true">
+            <div class="disc__spin" id="discSpin">
+              <img id="trackCover" src="" alt="Deity disc art">
+            </div>
+            <i></i>
+          </div>
+
+          <div class="track-meta">
+            <p id="trackTitle">Sukh Karta Dukh Harta</p>
+            <p><span id="trackType">Traditional Marathi Aarti</span><i>·</i><span id="trackPosition">1 of 3</span></p>
+            <div class="seek-wrap">
+              <input id="timeline" type="range" min="0" max="1000" value="0" aria-label="Track progress">
+              <div class="times"><span id="currentTime">0:00</span><span id="duration">0:00</span></div>
+            </div>
+          </div>
+
+          <!-- Volume Control (Tablet/Desktop only) -->
+          <div class="volume-control-wrap" id="volumeControl">
+            <button id="volumeMuteBtn" type="button" aria-label="Mute/Unmute">
+              <svg viewBox="0 0 24 24" class="icon-volume"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              <svg viewBox="0 0 24 24" class="icon-muted" hidden><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            </button>
+            <input id="volumeSlider" type="range" min="0" max="100" value="80" aria-label="Volume">
+          </div>
+
+          <!-- Controls -->
+          <div class="controls">
+            <button id="trackPrevious" type="button" aria-label="Previous track">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="play" id="playBtn" type="button" disabled aria-label="Play">
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+            </button>
+            <button id="trackNext" type="button" aria-label="Next track">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+            </button>
+            <button class="timer-toggle" id="timerBtn" type="button" aria-label="Set sleep timer" aria-controls="timerMenu" aria-expanded="false">
+              <span class="timer-toggle__icon" aria-hidden="true"></span>
+              <span id="timerBadge" hidden></span>
+            </button>
+            <button class="list-toggle" id="listBtn" type="button" aria-label="Show playlist" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h13v2H3zm0 5h13v2H3zm0 5h9v2H3zm15-6.5l4 3-4 3z"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <p class="swipe-hint"><span>← →</span> change deity <i>·</i> <span>↑ ↓</span> choose song</p>
+      </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <button class="sound-gate" id="soundGate" type="button" hidden aria-label="Play devotional music">
+      <span class="sound-gate__inner">
+        <span class="sound-gate__play" aria-hidden="true">▶</span>
+        <span class="sound-gate__copy">
+          <strong>Tap to play</strong>
+          <small id="soundGateTrack">Devotional Aarti</small>
+        </span>
+      </span>
+    </button>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <aside class="knowledge" id="knowledgeDrawer" aria-hidden="true" aria-label="Spiritual significance">
+    <button class="knowledge__close" id="knowledgeClose" type="button" aria-label="Close">×</button>
+    <p class="knowledge__eyebrow" id="knowledgeDeity">GANESHA</p>
+    <h2 id="knowledgeTitle">Why Sukh Karta<br>for Ganesha?</h2>
+    <p class="knowledge__lead" id="knowledgeLead"></p>
+    <dl>
+      <div><dt>Type</dt><dd id="knowledgeForm"></dd></div>
+      <div><dt>Vibe</dt><dd id="knowledgeQuality"></dd></div>
+    </dl>
+    <p class="knowledge__note" id="knowledgeNote"></p>
+  </aside>
+
+  <!-- About Dialog Modal -->
+  <dialog class="about" id="aboutDialog">
+    <button id="aboutClose" type="button" aria-label="Close">×</button>
+    <p class="about__eyebrow">BHAKTI NAAD · भक्ति नाद</p>
+    <h2>Devotion for<br>every soul.</h2>
+    <p>Welcome to <b>Bhakti Naad</b>, a digital sanctuary playing ambient, soulful devotional prayers, chalisa, and stotram. Choose from various deities to change the playlist, coloring, and mood of the space.</p>
+    <p>Inspired by the simplicity of devotional music, Bhakti Naad uses the YouTube API to bring you hand-picked versions of ancient prayers. You can configure a sleep timer to automatically turn off the music after you drift off to sleep.</p>
+    <p><b>Controls:</b> Swipe left/right on your screen to switch deities, or swipe up/down to change the track. You can also use the Arrow keys on your keyboard, and Space to play/pause.</p>
+  </dialog>
+
+  <!-- Support Dialog Modal -->
+  <dialog class="seva" id="sevaDialog">
+    <button class="seva__close" id="sevaClose" type="button" aria-label="Close">×</button>
+    <span class="seva__diya" aria-hidden="true"><i></i></span>
+    <p class="seva__eyebrow">SUPPORT THIS PROJECT</p>
+    <h2>Help us keep<br>Bhakti Naad running.</h2>
+    <p>Your generous contribution helps us maintain hosting servers, expand our playlist library, and keep Bhakti Naad ad-free and open for everyone.</p>
+    <div class="seva__payment" aria-label="UPI payment details">
+      <div class="seva__qr">
+        <canvas id="upiQrCode" width="160" height="160" style="display: block; width: 160px; height: 160px;"></canvas>
+      </div>
+      <span class="seva__upi-label">UPI ID</span>
+      <strong class="seva__upi-id">bhaktinaad@upi</strong>
+    </div>
+    <small>Support is entirely optional. Bhakti Naad will always remain free and ad-free.</small>
+  </dialog>
+
+
+  <!-- Full-width Bottom Audio Visualizer -->
+  <div class="visualizer" id="equalizer"></div>
+
+  <!-- Main scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
