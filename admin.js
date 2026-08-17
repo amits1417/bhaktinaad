@@ -36,6 +36,7 @@
   const customSongsList = byId('customSongsList');
   const addSongForm = byId('addSongForm');
   const songDeitySelect = byId('songDeity');
+  const exportBtn = byId('exportBtn');
 
   // Render list of all songs for the selected deity
   function renderSongsList() {
@@ -180,6 +181,45 @@
     renderSongsList();
     toast('Song added successfully!');
   });
+
+  function exportPlaylist() {
+    const baseDeities = JSON.parse(JSON.stringify(window.DEITY_DATA || []));
+    
+    baseDeities.forEach(deity => {
+      deity.tracks = deity.tracks.filter(track => !deletedSongIds.includes(track.id));
+      
+      const deityCustom = customSongs.filter(s => s.deityKey === deity.key);
+      deityCustom.forEach(song => {
+        if (!deity.tracks.some(t => t.id === song.id)) {
+          const cleanTrack = {
+            id: song.id,
+            title: song.title,
+            shortName: song.shortName,
+            type: song.type,
+            subline: song.subline,
+            lead: song.lead,
+            quality: song.quality || 'Peaceful, Devotional',
+            note: song.note || 'Manually added by devotee.'
+          };
+          deity.tracks.push(cleanTrack);
+        }
+      });
+    });
+
+    const dataStr = "window.DEITY_DATA = " + JSON.stringify(baseDeities, null, 2) + ";\n";
+    const blob = new Blob([dataStr], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.js';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('Downloaded data.js! Overwrite this in your project folder.');
+  }
+
+  if (exportBtn) exportBtn.addEventListener('click', exportPlaylist);
 
   // Initial render
   renderSongsList();
