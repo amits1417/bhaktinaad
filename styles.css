@@ -599,15 +599,15 @@ input[type="range"]::-moz-range-thumb {
 .controls svg { width: 18px; height: 18px; fill: currentColor; }
 
 .controls .play {
-  width: 54px;
-  height: 54px;
+  width: 68px;
+  height: 68px;
   color: #100603;
   background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,.25);
 }
 .controls .play svg {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
 }
 .controls .play:hover {
   color: #100603;
@@ -1126,26 +1126,8 @@ input[type="range"]::-moz-range-thumb {
 
 /* Autoplay Block Cover Gate */
 .sound-gate {
-  position: fixed;
-  z-index: 18;
-  left: 50%;
-  bottom: clamp(140px, 20vh, 200px);
-  padding: 9px 16px 9px 10px;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 999px;
-  display: inline-flex;
-  color: #fffaf0;
-  background: rgba(12, 6, 3, .78);
-  box-shadow:
-    0 8px 30px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.12);
-  backdrop-filter: blur(16px) saturate(120%);
-  text-align: left;
-  cursor: pointer;
-  transform: translateX(-50%);
-  animation: slide-gate-in .4s ease both;
+  display: none !important;
 }
-.sound-gate[hidden] { display: none; }
 
 @keyframes slide-gate-in {
   from { opacity: 0; transform: translate(-50%, 10px); }
@@ -1250,8 +1232,9 @@ input[type="range"]::-moz-range-thumb {
   }
   .disc { width: 68px; height: 68px; }
   .volume-control-wrap { display: none; } /* Hide volume control slider on mobile devices */
-  .controls button { width: 30px; height: 30px; }
-  .controls .play { width: 38px; height: 38px; }
+  .controls button { width: 36px; height: 36px; }
+  .controls .play { width: 58px; height: 58px; }
+  .controls .play svg { width: 24px; height: 24px; }
   .controls #trackPrevious { display: none; } /* Previous song hidden on mobile controls bar */
 }
 
