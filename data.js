@@ -5,7 +5,7 @@ window.DEITY_DATA = [
     "hindi": "श्री गणेश",
     "accent": "#ff8225",
     "accentRgb": "255, 130, 37",
-    "art": "assets/ganesha.jpg",
+    "art": ["assets/ganesha.jpg", "assets/ganesha_2.jpg"],
     "manifesto": "विघ्नहर्ता और बुद्धि के दाता",
     "tracks": [
       {
@@ -66,7 +66,7 @@ window.DEITY_DATA = [
     "hindi": "महादेव",
     "accent": "#3ca9c0",
     "accentRgb": "60, 169, 192",
-    "art": "assets/shiva.jpg",
+    "art": ["assets/shiva.jpg", "assets/shiva_2.jpg"],
     "manifesto": "सत्यम् शिवम् सुन्दरम्",
     "tracks": [
       {
@@ -137,7 +137,7 @@ window.DEITY_DATA = [
     "hindi": "श्री कृष्ण",
     "accent": "#d6a319",
     "accentRgb": "214, 163, 25",
-    "art": "assets/krishna.jpg",
+    "art": ["assets/krishna.jpg", "assets/krishna_2.jpg"],
     "manifesto": "हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे",
     "tracks": [
       {
@@ -198,7 +198,7 @@ window.DEITY_DATA = [
     "hindi": "श्री राम",
     "accent": "#ffa125",
     "accentRgb": "255, 161, 37",
-    "art": "assets/rama.jpg",
+    "art": ["assets/rama.jpg", "assets/rama_2.jpg"],
     "manifesto": "मर्यादा पुरुषोत्तम राम",
     "tracks": [
       {
@@ -249,7 +249,7 @@ window.DEITY_DATA = [
     "hindi": "हनुमान",
     "accent": "#e64a19",
     "accentRgb": "230, 74, 25",
-    "art": "assets/hanuman.jpg",
+    "art": ["assets/hanuman.jpg", "assets/hanuman_2.jpg"],
     "manifesto": "जय श्री राम जय वीर हनुमान",
     "tracks": [
       {
@@ -300,7 +300,7 @@ window.DEITY_DATA = [
     "hindi": "माँ दुर्गा",
     "accent": "#b81232",
     "accentRgb": "184, 18, 50",
-    "art": "assets/durga.jpg",
+    "art": ["assets/durga.jpg", "assets/durga_2.jpg"],
     "manifesto": "या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता",
     "tracks": [
       {
@@ -322,6 +322,16 @@ window.DEITY_DATA = [
         "lead": "aygiri nandini is a beautiful Bhajan dedicated to Lord DURGA.",
         "quality": "Peaceful, Devotional",
         "note": "Manually added by devotee."
+      },
+      {
+        "id": "K9r3iIOjTzc",
+        "title": "Shree Durga Chalisa · Anuradha Paudwal",
+        "shortName": "Durga Chalisa",
+        "type": "Chalisa",
+        "subline": "Forty verses of praise for Goddess Durga",
+        "lead": "Shree Durga Chalisa contains forty verses singing the praises of Goddess Durga, describing her weapons, her victories, and her protective energy.",
+        "quality": "Traditional, Devotional, Auspicious",
+        "note": "Highly recommended for daily morning prayers and during Navratri festival."
       }
     ]
   },
@@ -331,7 +341,7 @@ window.DEITY_DATA = [
     "hindi": "श्री शनिदेव",
     "accent": "#1a237e",
     "accentRgb": "26, 35, 126",
-    "art": "assets/shanidev.jpg",
+    "art": ["assets/shanidev.jpg", "assets/shanidev_2.jpg"],
     "manifesto": "कर्मफल दाता और न्यायप्रिय देव",
     "tracks": [
       {
@@ -372,7 +382,7 @@ window.DEITY_DATA = [
     "hindi": "श्री साईं बाबा",
     "accent": "#e65100",
     "accentRgb": "230, 81, 0",
-    "art": "assets/saibaba.jpg",
+    "art": ["assets/saibaba.jpg", "assets/saibaba_2.jpg"],
     "manifesto": "सबका मालिक एक",
     "tracks": [
       {
@@ -394,6 +404,16 @@ window.DEITY_DATA = [
         "lead": "Sai Ram Sai Shyam Sai Bhagwan is a highly popular bhajan that continuously chants the sacred name of Shirdi Sai Baba.",
         "quality": "Peaceful, Joyful, Rhythmic",
         "note": "Brings immense peace and positive vibes when played in the background."
+      },
+      {
+        "id": "87Y-OH_mJxM",
+        "title": "Shree Sai Chalisa · Pramod Medhi",
+        "shortName": "Sai Chalisa",
+        "type": "Chalisa",
+        "subline": "Forty verses of praise for Sai Baba",
+        "lead": "Shree Sai Chalisa contains forty beautiful verses highlighting Sai Baba's teachings of Shraddha (faith) and Saburi (patience).",
+        "quality": "Traditional, Calming, Peaceful",
+        "note": "Best played on Thursdays for deep inner peace."
       }
     ]
   },
@@ -403,7 +423,7 @@ window.DEITY_DATA = [
     "hindi": "श्री विष्णु",
     "accent": "#ffd54f",
     "accentRgb": "255, 213, 79",
-    "art": "assets/vishnu.jpg",
+    "art": ["assets/vishnu.jpg", "assets/vishnu_2.jpg"],
     "manifesto": "जगत के पालनहार और संरक्षक",
     "tracks": [
       {
@@ -425,6 +445,16 @@ window.DEITY_DATA = [
         "lead": "Shri Hari Stotram is a beautifully poetic Sanskrit stotra praising Lord Vishnu as the protector of the universe, riding Garuda, with Lakshmi.",
         "quality": "Acoustic, Meditative, Sanskrit",
         "note": "Perfect for deep relaxation, morning meditation, and peaceful vibes."
+      },
+      {
+        "id": "V4s0csapchI",
+        "title": "Vishnu Sahasranamam · Traditional Chant",
+        "shortName": "Sahasranamam",
+        "type": "Stotram",
+        "subline": "The 1000 names of Lord Vishnu",
+        "lead": "Vishnu Sahasranamam contains the one thousand sacred names of Lord Vishnu. Recited to receive cosmic protection, peace, prosperity, and spiritual elevation.",
+        "quality": "Traditional, Meditative, Sacred",
+        "note": "Brings peace and positive energy to your entire home."
       }
     ]
   }

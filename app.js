@@ -361,6 +361,15 @@
     vishnu: 'ॐ नमो भगवते वासुदेवाय 🪷'
   };
 
+  // Get active artwork path based on the current hour of the day
+  function getArtworkForHour(art) {
+    if (Array.isArray(art)) {
+      const hour = new Date().getHours();
+      return art[hour % art.length];
+    }
+    return art;
+  }
+
   function renderDeity(immediate = false) {
     const deity = currentDeity();
     el.app.dataset.deity = deity.key;
@@ -384,7 +393,7 @@
       marqueeEl.textContent = repeated + '   ·   ' + repeated;
     }
 
-    setArtwork(deity.art, immediate);
+    setArtwork(getArtworkForHour(deity.art), immediate);
     renderTrack();
   }
 
@@ -1370,6 +1379,16 @@
       selectTrack(trackIndex + 1, true);
     }
   });
+
+  // Check for hour changes to automatically update deity artwork
+  let lastActiveHour = new Date().getHours();
+  setInterval(() => {
+    const currentHour = new Date().getHours();
+    if (currentHour !== lastActiveHour) {
+      lastActiveHour = currentHour;
+      renderDeity(false); // smoothly crossfade to the new hour's artwork
+    }
+  }, 60000);
 
   loadYouTubeScript();
 })();
