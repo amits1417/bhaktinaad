@@ -50,22 +50,22 @@ button { color: inherit; border: none; background: transparent; cursor: pointer;
 
 /* Fallback linear gradient backgrounds for deities */
 [data-deity="ganesha"] .background__layer {
-  background: radial-gradient(circle at 30% 20%, #4a1c02 0%, #0d0501 80%);
+  background-image: radial-gradient(circle at 30% 20%, #4a1c02 0%, #0d0501 80%);
 }
 [data-deity="shiva"] .background__layer {
-  background: radial-gradient(circle at 30% 20%, #082d38 0%, #030d12 80%);
+  background-image: radial-gradient(circle at 30% 20%, #082d38 0%, #030d12 80%);
 }
 [data-deity="krishna"] .background__layer {
-  background: radial-gradient(circle at 30% 20%, #3d2d02 0%, #0b0801 80%);
+  background-image: radial-gradient(circle at 30% 20%, #3d2d02 0%, #0b0801 80%);
 }
 [data-deity="rama"] .background__layer {
-  background: radial-gradient(circle at 30% 20%, #4a2800 0%, #0c0600 80%);
+  background-image: radial-gradient(circle at 30% 20%, #4a2800 0%, #0c0600 80%);
 }
 [data-deity="hanuman"] .background__layer {
-  background: radial-gradient(circle at 30% 20%, #4f1100 0%, #0d0300 80%);
+  background-image: radial-gradient(circle at 30% 20%, #4f1100 0%, #0d0300 80%);
 }
 [data-deity="durga"] .background__layer {
-  background: radial-gradient(circle at 30% 20%, #40040f 0%, #0a0002 80%);
+  background-image: radial-gradient(circle at 30% 20%, #40040f 0%, #0a0002 80%);
 }
 
 .background__layer.is-active { opacity: 1; transform: scale(1); }
