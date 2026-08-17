@@ -1596,7 +1596,7 @@ input[type="range"]::-moz-range-thumb {
 /* Desktop Widescreen Layout: Cinematic Blurred Background + Centered Crisp Deity */
 @media (min-width: 961px) {
   .background__layer {
-    background-size: 0 0 !important; /* Hide parent rendering but preserve inheritance */
+    background-size: cover !important; /* Ensure background is loaded and inherits correctly */
   }
   
   /* Blurred background cover to fill landscape screen */
