@@ -1179,8 +1179,8 @@ input[type="range"]::-moz-range-thumb {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 20px 16px 160px;
+    justify-content: flex-end !important;
+    padding: 20px 16px 190px !important;
     overflow: hidden !important;
     height: 100dvh;
     touch-action: none;
@@ -1505,6 +1505,12 @@ input[type="range"]::-moz-range-thumb {
   .sacred-marquee {
     top: 64px; /* adjust below topbar on mobile */
   }
+}
+
+/* Shani Dev Light Cyan Marquee Override for High Contrast */
+[data-deity="shanidev"] .marquee-content {
+  color: #80deea !important;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.6) !important;
 }
 
 
