@@ -1589,10 +1589,35 @@ input[type="range"]::-moz-range-thumb {
   display: none !important;
 }
 
-/* Desktop Widescreen Layout Background Focus Shifter */
+/* Desktop Widescreen Layout: Cinematic Blurred Background + Centered Crisp Deity */
 @media (min-width: 961px) {
   .background__layer {
-    background-position: center 18% !important; /* Shift cover background upwards to keep deity face and crown in view */
+    background-size: 0 0 !important; /* Hide parent rendering but preserve inheritance */
+  }
+  
+  /* Blurred background cover to fill landscape screen */
+  .background__layer::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -40px !important; /* expand to hide blur artifacts */
+    background-image: inherit !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    filter: blur(35px) brightness(0.55) saturate(120%) !important;
+    z-index: 1 !important;
+  }
+  
+  /* Crisp, centered, uncropped deity in foreground */
+  .background__layer::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: inherit !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    z-index: 2 !important;
   }
 }
 
