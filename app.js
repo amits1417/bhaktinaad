@@ -874,36 +874,141 @@
     }
     reset(init = false) {
       if (!bgCanvas) return;
-      this.x = Math.random() * bgCanvas.width;
-      this.y = init ? Math.random() * bgCanvas.height : bgCanvas.height + 20;
-      this.size = Math.random() * 3 + 1.2;
-      this.speedY = Math.random() * 0.35 + 0.15;
-      this.alpha = Math.random() * 0.4 + 0.1;
-      this.fadeSpeed = Math.random() * 0.002 + 0.001;
-      this.angle = Math.random() * 360;
-      this.spin = Math.random() * 0.4 - 0.2;
+      const deity = currentDeity();
+      const deityKey = deity ? deity.key : 'ganesha';
+      this.deityKey = deityKey;
+      
+      if (deityKey === 'shiva') {
+        // Shiva: Smoke clouds (large, slow, rising)
+        this.x = Math.random() * bgCanvas.width;
+        this.y = init ? Math.random() * bgCanvas.height : bgCanvas.height + 60;
+        this.size = Math.random() * 40 + 30;
+        this.speedY = Math.random() * 0.15 + 0.12;
+        this.speedX = Math.random() * 0.1 - 0.05;
+        this.alpha = Math.random() * 0.05 + 0.025;
+        this.fadeSpeed = Math.random() * 0.0003 + 0.00015;
+        this.angle = Math.random() * 360;
+        this.spin = Math.random() * 0.2 - 0.1;
+      } else if (deityKey === 'krishna') {
+        // Krishna: Leaves and flower petals blowing horizontally (left to right)
+        this.x = init ? Math.random() * bgCanvas.width : -30;
+        this.y = Math.random() * bgCanvas.height;
+        this.size = Math.random() * 6 + 4;
+        this.speedX = Math.random() * 0.7 + 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.15;
+        this.alpha = Math.random() * 0.5 + 0.2;
+        this.fadeSpeed = 0;
+        this.angle = Math.random() * 360;
+        this.spin = Math.random() * 1.2 + 0.4;
+        this.type = Math.random() > 0.5 ? 'leaf' : 'petal';
+      } else {
+        // Ganesha, Rama, Hanuman, Durga: Gentle floating sparkles and petals
+        this.x = Math.random() * bgCanvas.width;
+        this.y = init ? Math.random() * bgCanvas.height : bgCanvas.height + 20;
+        this.size = Math.random() * 3.5 + 1.2;
+        this.speedY = Math.random() * 0.32 + 0.12;
+        this.speedX = Math.random() * 0.16 - 0.08;
+        this.alpha = Math.random() * 0.45 + 0.15;
+        this.fadeSpeed = Math.random() * 0.0018 + 0.0008;
+        this.angle = Math.random() * 360;
+        this.spin = Math.random() * 0.4 - 0.2;
+        this.type = Math.random() > 0.6 ? 'petal' : 'sparkle';
+      }
     }
     update() {
       if (!bgCanvas) return;
-      this.y -= this.speedY;
-      this.x += Math.sin(this.angle * Math.PI / 180) * 0.2;
-      this.angle += this.spin;
-      this.alpha -= this.fadeSpeed;
-      if (this.alpha <= 0 || this.y < -10 || this.x < -10 || this.x > bgCanvas.width + 10) {
+      const activeDeityKey = currentDeity() ? currentDeity().key : 'ganesha';
+      if (this.deityKey !== activeDeityKey) {
         this.reset(false);
+        return;
+      }
+      
+      if (this.deityKey === 'shiva') {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        this.alpha -= this.fadeSpeed;
+        if (this.alpha <= 0 || this.y < -this.size * 1.5) {
+          this.reset(false);
+        }
+      } else if (this.deityKey === 'krishna') {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.angle += this.spin;
+        if (this.x > bgCanvas.width + 30 || this.y < -30 || this.y > bgCanvas.height + 30) {
+          this.reset(false);
+        }
+      } else {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        this.angle += this.spin;
+        this.alpha -= this.fadeSpeed;
+        if (this.alpha <= 0 || this.y < -15) {
+          this.reset(false);
+        }
       }
     }
     draw(rgb) {
       if (!bgCtx) return;
-      bgCtx.save();
-      bgCtx.beginPath();
-      const grad = bgCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
-      grad.addColorStop(0, `rgba(${rgb}, ${this.alpha})`);
-      grad.addColorStop(1, `rgba(${rgb}, 0)`);
-      bgCtx.fillStyle = grad;
-      bgCtx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
-      bgCtx.fill();
-      bgCtx.restore();
+      
+      if (this.deityKey === 'shiva') {
+        bgCtx.save();
+        bgCtx.beginPath();
+        const grad = bgCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+        grad.addColorStop(0, `rgba(160, 185, 200, ${this.alpha})`);
+        grad.addColorStop(0.5, `rgba(120, 150, 170, ${this.alpha * 0.4})`);
+        grad.addColorStop(1, 'rgba(120, 150, 170, 0)');
+        bgCtx.fillStyle = grad;
+        bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        bgCtx.fill();
+        bgCtx.restore();
+      } else if (this.deityKey === 'krishna') {
+        bgCtx.save();
+        bgCtx.translate(this.x, this.y);
+        bgCtx.rotate(this.angle * Math.PI / 180);
+        bgCtx.beginPath();
+        if (this.type === 'leaf') {
+          // Soft green leaf
+          bgCtx.fillStyle = `rgba(46, 125, 50, ${this.alpha})`;
+          bgCtx.moveTo(0, -this.size);
+          bgCtx.quadraticCurveTo(this.size * 0.7, -this.size * 0.5, 0, this.size);
+          bgCtx.quadraticCurveTo(-this.size * 0.7, -this.size * 0.5, 0, -this.size);
+        } else {
+          // Soft pink lotus petal
+          bgCtx.fillStyle = `rgba(244, 143, 177, ${this.alpha})`;
+          bgCtx.moveTo(0, -this.size);
+          bgCtx.quadraticCurveTo(this.size * 0.8, -this.size * 0.3, this.size * 0.2, this.size);
+          bgCtx.quadraticCurveTo(-this.size * 0.8, -this.size * 0.3, 0, -this.size);
+        }
+        bgCtx.fill();
+        bgCtx.restore();
+      } else {
+        bgCtx.save();
+        if (this.type === 'petal') {
+          bgCtx.translate(this.x, this.y);
+          bgCtx.rotate(this.angle * Math.PI / 180);
+          bgCtx.beginPath();
+          if (this.deityKey === 'ganesha' || this.deityKey === 'durga') {
+            // Hibiscus red petals
+            bgCtx.fillStyle = `rgba(198, 40, 40, ${this.alpha * 0.7})`;
+          } else {
+            // Orange marigold petals for Hanuman/Rama
+            bgCtx.fillStyle = `rgba(230, 81, 0, ${this.alpha * 0.7})`;
+          }
+          bgCtx.moveTo(0, -this.size);
+          bgCtx.quadraticCurveTo(this.size * 0.8, -this.size * 0.4, 0, this.size);
+          bgCtx.quadraticCurveTo(-this.size * 0.8, -this.size * 0.4, 0, -this.size);
+          bgCtx.fill();
+        } else {
+          bgCtx.beginPath();
+          const grad = bgCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
+          grad.addColorStop(0, `rgba(${rgb}, ${this.alpha})`);
+          grad.addColorStop(1, `rgba(${rgb}, 0)`);
+          bgCtx.fillStyle = grad;
+          bgCtx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+          bgCtx.fill();
+        }
+        bgCtx.restore();
+      }
     }
   }
 
