@@ -34,16 +34,16 @@ button { color: inherit; border: none; background: transparent; cursor: pointer;
 }
 
 /* Background Visuals */
-.background,
+.background { position: fixed; inset: 0; z-index: -3; background: #0c0502; overflow: hidden; }
 .background__layer,
 .background__scrim,
 .background__grain { position: absolute; inset: 0; }
-.background { z-index: -3; background: #0c0502; }
 
 .background__layer {
   opacity: 0;
   background-position: center center;
   background-size: cover;
+  background-repeat: no-repeat;
   transform: scale(1.05);
   transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 12s ease-out;
 }
@@ -77,11 +77,7 @@ button { color: inherit; border: none; background: transparent; cursor: pointer;
 }
 
 .background__grain {
-  inset: -50%;
-  opacity: .04;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain-animation .35s steps(2) infinite;
+  display: none; /* disable heavy noise filter to remove screen blur and rendering lag */
 }
 
 @keyframes grain-animation {

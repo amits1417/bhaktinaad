@@ -384,6 +384,7 @@
       trackIndex = storedTrackIndex(index);
       saveState();
       renderDeity(false);
+      initBgParticles();
       updateDeitySelectorActive();
       cueSelected(resume);
       document.querySelector('.wordmark').classList.remove('is-changing');
@@ -1014,8 +1015,13 @@
 
   function resizeBgCanvas() {
     if (!bgCanvas) return;
-    bgCanvas.width = window.innerWidth;
-    bgCanvas.height = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    bgCanvas.width = window.innerWidth * dpr;
+    bgCanvas.height = window.innerHeight * dpr;
+    if (bgCtx) {
+      bgCtx.setTransform(1, 0, 0, 1, 0, 0);
+      bgCtx.scale(dpr, dpr);
+    }
   }
 
   function initBgParticles() {
@@ -1028,7 +1034,7 @@
 
   function animateBgParticles() {
     if (!bgCtx || !bgCanvas) return;
-    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+    bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     
     const deity = currentDeity();
     const rgb = deity.accentRgb || '255, 130, 37';
