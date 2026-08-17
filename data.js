@@ -324,5 +324,108 @@ window.DEITY_DATA = [
         "note": "Manually added by devotee."
       }
     ]
+  },
+  {
+    "key": "shanidev",
+    "name": "Shani Dev",
+    "hindi": "श्री शनिदेव",
+    "accent": "#1a237e",
+    "accentRgb": "26, 35, 126",
+    "art": "assets/shanidev.jpg",
+    "manifesto": "कर्मफल दाता और न्यायप्रिय देव",
+    "tracks": [
+      {
+        "id": "gldgktWDDFQ",
+        "title": "Shree Shani Dev Aarti · Traditional",
+        "shortName": "Shani Aarti",
+        "type": "Aarti",
+        "subline": "Aarti of Lord Shani Dev",
+        "lead": "Aarti Shree Shani Dev Ki is a powerful prayer dedicated to Shani Dev, honoring his justice, wisdom, and protection.",
+        "quality": "Devotional, Protective, Calming",
+        "note": "Chanted to request protection from difficulties and negative energy."
+      },
+      {
+        "id": "Fl9GLiHzLfU",
+        "title": "Shree Shani Chalisa · T-Series",
+        "shortName": "Shani Chalisa",
+        "type": "Chalisa",
+        "subline": "Forty verses in praise of Shani Dev",
+        "lead": "Shree Shani Chalisa contains forty verses describing the glories, qualities, and legends associated with Lord Shani.",
+        "quality": "Traditional, Auspicious, Peaceful",
+        "note": "Best recited on Saturdays for peace and removal of obstacles."
+      },
+      {
+        "id": "LZQXQYK5AMA",
+        "title": "Nilanjana Samabhasam Mantra 108 Times",
+        "shortName": "Shani Mantra",
+        "type": "Mantra",
+        "subline": "108 chants for Saturn planetary peace",
+        "lead": "Nilanjana Samabhasam is the most famous Vedic shloka chanting the praise of Lord Shani, son of Surya and Chhaya.",
+        "quality": "Chant, Meditative, Protective",
+        "note": "Chanted during Saturday morning meditations."
+      }
+    ]
+  },
+  {
+    "key": "saibaba",
+    "name": "Sai Baba",
+    "hindi": "श्री साईं बाबा",
+    "accent": "#e65100",
+    "accentRgb": "230, 81, 0",
+    "art": "assets/saibaba.jpg",
+    "manifesto": "सबका मालिक एक",
+    "tracks": [
+      {
+        "id": "7fKA6Li9YjA",
+        "title": "Aarti Sai Baba · Anuradha Paudwal",
+        "shortName": "Sai Aarti",
+        "type": "Aarti",
+        "subline": "Traditional Shirdi Sai Aarti",
+        "lead": "Aarti Sai Baba is the traditional morning and evening aarti sung at the Shirdi temple, celebrating Sai Baba's love and compassion.",
+        "quality": "Traditional, Melodious, Uplifting",
+        "note": "Perfect for daily prayers and Thursday Sai services."
+      },
+      {
+        "id": "ibfxTYpgqAQ",
+        "title": "Sai Ram Sai Shyam Sai Bhagwan · Sadhana Sargam",
+        "shortName": "Sai Ram Sai Shyam",
+        "type": "Bhajan",
+        "subline": "Popular Sai Mahamantra",
+        "lead": "Sai Ram Sai Shyam Sai Bhagwan is a highly popular bhajan that continuously chants the sacred name of Shirdi Sai Baba.",
+        "quality": "Peaceful, Joyful, Rhythmic",
+        "note": "Brings immense peace and positive vibes when played in the background."
+      }
+    ]
+  },
+  {
+    "key": "vishnu",
+    "name": "Vishnu",
+    "hindi": "श्री विष्णु",
+    "accent": "#ffd54f",
+    "accentRgb": "255, 213, 79",
+    "art": "assets/vishnu.jpg",
+    "manifesto": "जगत के पालनहार और संरक्षक",
+    "tracks": [
+      {
+        "id": "rSs5NtNbsGE",
+        "title": "Om Jai Jagdish Hare · Traditional Aarti",
+        "shortName": "Om Jai Jagdish",
+        "type": "Aarti",
+        "subline": "Universal Hindi Aarti of Lord Vishnu",
+        "lead": "Om Jai Jagdish Hare is the most widely sung Hindi Aarti dedicated to Lord Vishnu (Jagadish), seeking his grace, health, and prosperity.",
+        "quality": "Traditional, Harmonious, Rhythmic",
+        "note": "Chanted in almost every Hindu household during evening prayers."
+      },
+      {
+        "id": "d_oAOxFGNWM",
+        "title": "Shri Hari Stotram · Agam Aggarwal",
+        "shortName": "Hari Stotram",
+        "type": "Stotram",
+        "subline": "Jagajjala Paala Stotra",
+        "lead": "Shri Hari Stotram is a beautifully poetic Sanskrit stotra praising Lord Vishnu as the protector of the universe, riding Garuda, with Lakshmi.",
+        "quality": "Acoustic, Meditative, Sanskrit",
+        "note": "Perfect for deep relaxation, morning meditation, and peaceful vibes."
+      }
+    ]
   }
 ];
