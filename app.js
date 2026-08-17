@@ -578,10 +578,90 @@
     setTimeout(() => el.knowledgeClose.focus(), 300);
   }
 
+  function getHinduCalendarDetails(date) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    
+    const dayName = days[date.getDay()];
+    const dateNum = date.getDate();
+    const monthName = months[date.getMonth()];
+    
+    const gregorianStr = `${dayName}, ${dateNum} ${monthName}`;
+    
+    const refNewMoon = new Date('2024-12-30T00:00:00Z');
+    const msPerDay = 86400000;
+    const synodicMonth = 29.530588853;
+    const diffDays = (date.getTime() - refNewMoon.getTime()) / msPerDay;
+    
+    let lunarAge = diffDays % synodicMonth;
+    if (lunarAge < 0) lunarAge += synodicMonth;
+    
+    const tithiNum = Math.floor((lunarAge / synodicMonth) * 30) + 1;
+    let paksha = tithiNum <= 15 ? 'Shukla' : 'Krishna';
+    let tithiIdx = tithiNum <= 15 ? tithiNum : tithiNum - 15;
+    
+    const tithiNames = [
+      'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami',
+      'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
+      'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima'
+    ];
+    
+    let tithiName = '';
+    if (tithiNum === 30) tithiName = 'Amavasya';
+    else if (tithiNum === 15) tithiName = 'Purnima';
+    else tithiName = `${tithiNames[tithiIdx - 1]} (${paksha})`;
+    
+    let hinduMonth = 'Shravan';
+    const m = date.getMonth();
+    if (m === 0) hinduMonth = 'Pausha/Magha';
+    else if (m === 1) hinduMonth = 'Magha/Phalguna';
+    else if (m === 2) hinduMonth = 'Phalguna/Chaitra';
+    else if (m === 3) hinduMonth = 'Chaitra/Vaishakha';
+    else if (m === 4) hinduMonth = 'Vaishakha/Jyeshtha';
+    else if (m === 5) hinduMonth = 'Jyeshtha/Ashadha';
+    else if (m === 6) hinduMonth = 'Ashadha/Shravan';
+    else if (m === 7) hinduMonth = 'Shravan';
+    else if (m === 8) hinduMonth = 'Bhadrapada';
+    else if (m === 9) hinduMonth = 'Ashvina';
+    else if (m === 10) hinduMonth = 'Kartika';
+    else if (m === 11) hinduMonth = 'Margashirsha';
+    
+    let festival = '';
+    const dateKey = `${m + 1}-${date.getDate()}`;
+    if (date.getFullYear() === 2026) {
+      if (dateKey === '8-17') festival = 'Shravan Somvar';
+      else if (dateKey === '8-28') festival = 'Raksha Bandhan';
+      else if (dateKey === '9-4') festival = 'Janmashtami';
+      else if (dateKey === '9-14') festival = 'Ganesh Chaturthi';
+      else if (dateKey === '10-20') festival = 'Vijayadashami';
+      else if (dateKey === '11-8') festival = 'Deepavali';
+    }
+    
+    if (!festival && date.getDay() === 1 && hinduMonth === 'Shravan') {
+      festival = 'Shravan Somvar';
+    }
+    
+    return {
+      gregorian: gregorianStr,
+      tithi: `${tithiName} · ${hinduMonth}`,
+      festival: festival ? `🪔 ${festival}` : ''
+    };
+  }
+
   // Clock ticks
   function tickClock() {
     const now = new Date();
     el.clock.textContent = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' });
+    
+    const details = getHinduCalendarDetails(now);
+    const hinduDateEl = byId('hinduDate');
+    if (hinduDateEl) {
+      hinduDateEl.innerHTML = `
+        <div>${details.gregorian}</div>
+        <div style="color: var(--accent); margin-top: 1px;">${details.tithi}</div>
+        ${details.festival ? `<div style="color: #ffd54f; font-size: 8px; margin-top: 2px;">${details.festival}</div>` : ''}
+      `;
+    }
   }
 
   function closeKnowledge() {
@@ -839,25 +919,41 @@
   }
 
   function animateVisualizer() {
-    if (!playing) {
-      vBars.forEach(bar => {
-        const transformStr = bar.style.transform || 'scaleY(0.08)';
-        const match = transformStr.match(/scaleY\(([^)]+)\)/);
-        const curScale = match ? parseFloat(match[1]) : 0.08;
-        if (curScale > 0.08) {
-          bar.style.transform = `scaleY(${Math.max(0.08, curScale - 0.04)})`;
-        }
-      });
-      requestAnimationFrame(animateVisualizer);
-      return;
-    }
-
+    const volFactor = isMuted ? 0 : volume / 100;
+    
     vBars.forEach((bar, index) => {
-      const time = Date.now() * 0.004;
-      const base = Math.sin(time + index * 0.15) * 0.22 + 0.35;
-      const noise = Math.random() * 0.15;
-      const scale = Math.max(0.08, base + noise);
-      bar.style.transform = `scaleY(${scale})`;
+      let targetScale = 0.08;
+      
+      if (playing && volFactor > 0) {
+        const time = Date.now() * 0.004;
+        const total = vBars.length;
+        const pct = index / total;
+        
+        let base = 0.08;
+        if (pct < 0.15) {
+          // Bass: slow, heavy thumps
+          base = Math.sin(time * 1.6 + index * 0.4) * 0.35 + 0.45;
+          base += Math.random() * 0.2;
+        } else if (pct < 0.70) {
+          // Mids: voice/melodic activity
+          base = Math.sin(time * 2.8 + index * 0.15) * 0.28 + 0.32;
+          base += Math.random() * 0.16;
+        } else {
+          // Treble: rapid high-freq spikes
+          base = Math.sin(time * 5.5 + index * 0.08) * 0.16 + 0.22;
+          base += Math.random() * 0.12;
+        }
+        
+        const volumeMultiplier = 0.15 + 0.85 * volFactor;
+        targetScale = Math.max(0.08, base * volumeMultiplier);
+      }
+      
+      const currentTransform = bar.style.transform || 'scaleY(0.08)';
+      const match = currentTransform.match(/scaleY\(([^)]+)\)/);
+      const currentScale = match ? parseFloat(match[1]) : 0.08;
+      
+      const nextScale = currentScale + (targetScale - currentScale) * 0.3;
+      bar.style.transform = `scaleY(${Math.max(0.08, nextScale)})`;
     });
 
     requestAnimationFrame(animateVisualizer);

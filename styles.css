@@ -34,16 +34,16 @@ button { color: inherit; border: none; background: transparent; cursor: pointer;
 }
 
 /* Background Visuals */
-.background { position: fixed; inset: 0; z-index: -3; background: #0c0502; overflow: hidden; }
+.background { position: fixed !important; inset: 0 !important; z-index: -3 !important; background: #0c0502 !important; overflow: hidden !important; width: 100vw !important; height: 100vh !important; }
 .background__layer,
 .background__scrim,
-.background__grain { position: absolute; inset: 0; }
+.background__grain { position: absolute !important; inset: 0 !important; }
 
 .background__layer {
   opacity: 0;
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
   transform: scale(1.05);
   transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 12s ease-out;
 }
@@ -568,8 +568,8 @@ input[type="range"]::-moz-range-thumb {
   gap: 3px;
 }
 .controls button {
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -583,14 +583,18 @@ input[type="range"]::-moz-range-thumb {
 .controls button:active {
   transform: scale(.92);
 }
-.controls svg { width: 16px; height: 16px; fill: currentColor; }
+.controls svg { width: 18px; height: 18px; fill: currentColor; }
 
 .controls .play {
-  width: 44px;
-  height: 44px;
+  width: 54px;
+  height: 54px;
   color: #100603;
   background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+.controls .play svg {
+  width: 22px;
+  height: 22px;
 }
 .controls .play:hover {
   color: #100603;
