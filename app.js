@@ -469,6 +469,11 @@
     saveState();
     renderTrack();
     cueSelected(autoplay || playing);
+    
+    // Auto-close playlist on mobile after selecting a track
+    if (window.innerWidth <= 960) {
+      closeList();
+    }
   }
 
   function setPlaying(value) {
