@@ -393,7 +393,9 @@
       marqueeEl.textContent = repeated + '   ·   ' + repeated;
     }
 
-    setArtwork(getArtworkForHour(deity.art), immediate);
+    const isDesktop = window.innerWidth > 960;
+    const artArray = (isDesktop && deity.artDesktop) ? deity.artDesktop : deity.art;
+    setArtwork(getArtworkForHour(artArray), immediate);
     renderTrack();
   }
 

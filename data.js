@@ -6,6 +6,7 @@ window.DEITY_DATA = [
     "accent": "#ff8225",
     "accentRgb": "255, 130, 37",
     "art": ["assets/ganesha.jpg", "assets/ganesha_2.jpg"],
+    "artDesktop": ["assets/ganesha_desktop.jpg", "assets/ganesha_desktop.jpg"],
     "manifesto": "विघ्नहर्ता और बुद्धि के दाता",
     "tracks": [
       {
@@ -67,6 +68,7 @@ window.DEITY_DATA = [
     "accent": "#3ca9c0",
     "accentRgb": "60, 169, 192",
     "art": ["assets/shiva.jpg", "assets/shiva_2.jpg"],
+    "artDesktop": ["assets/shiva_desktop.jpg", "assets/shiva_desktop.jpg"],
     "manifesto": "सत्यम् शिवम् सुन्दरम्",
     "tracks": [
       {
@@ -138,6 +140,7 @@ window.DEITY_DATA = [
     "accent": "#d6a319",
     "accentRgb": "214, 163, 25",
     "art": ["assets/krishna.jpg", "assets/krishna_2.jpg"],
+    "artDesktop": ["assets/krishna_desktop.jpg", "assets/krishna_desktop.jpg"],
     "manifesto": "हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे",
     "tracks": [
       {
@@ -199,6 +202,7 @@ window.DEITY_DATA = [
     "accent": "#ffa125",
     "accentRgb": "255, 161, 37",
     "art": ["assets/rama.jpg", "assets/rama_2.jpg"],
+    "artDesktop": ["assets/rama_desktop.jpg", "assets/rama_desktop.jpg"],
     "manifesto": "मर्यादा पुरुषोत्तम राम",
     "tracks": [
       {
@@ -250,6 +254,7 @@ window.DEITY_DATA = [
     "accent": "#e64a19",
     "accentRgb": "230, 74, 25",
     "art": ["assets/hanuman.jpg", "assets/hanuman_2.jpg"],
+    "artDesktop": ["assets/hanuman_desktop.jpg", "assets/hanuman_desktop.jpg"],
     "manifesto": "जय श्री राम जय वीर हनुमान",
     "tracks": [
       {
@@ -301,6 +306,7 @@ window.DEITY_DATA = [
     "accent": "#b81232",
     "accentRgb": "184, 18, 50",
     "art": ["assets/durga.jpg", "assets/durga_2.jpg"],
+    "artDesktop": ["assets/durga_desktop.jpg", "assets/durga_desktop.jpg"],
     "manifesto": "या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता",
     "tracks": [
       {
@@ -342,6 +348,7 @@ window.DEITY_DATA = [
     "accent": "#1a237e",
     "accentRgb": "26, 35, 126",
     "art": ["assets/shanidev.jpg", "assets/shanidev_2.jpg"],
+    "artDesktop": ["assets/shanidev_desktop.jpg", "assets/shanidev_desktop.jpg"],
     "manifesto": "कर्मफल दाता और न्यायप्रिय देव",
     "tracks": [
       {
@@ -383,6 +390,7 @@ window.DEITY_DATA = [
     "accent": "#e65100",
     "accentRgb": "230, 81, 0",
     "art": ["assets/saibaba.jpg", "assets/saibaba_2.jpg"],
+    "artDesktop": ["assets/saibaba_desktop.jpg", "assets/saibaba_desktop.jpg"],
     "manifesto": "सबका मालिक एक",
     "tracks": [
       {
@@ -424,6 +432,7 @@ window.DEITY_DATA = [
     "accent": "#ffd54f",
     "accentRgb": "255, 213, 79",
     "art": ["assets/vishnu.jpg", "assets/vishnu_2.jpg"],
+    "artDesktop": ["assets/vishnu_desktop.jpg", "assets/vishnu_desktop.jpg"],
     "manifesto": "जगत के पालनहार और संरक्षक",
     "tracks": [
       {
