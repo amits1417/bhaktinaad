@@ -1580,4 +1580,9 @@ input[type="range"]::-moz-range-thumb {
   text-shadow: 0 0 12px rgba(0, 229, 255, 0.6) !important;
 }
 
+/* Hide track form type and significance link line */
+.teaching-line {
+  display: none !important;
+}
+
 
