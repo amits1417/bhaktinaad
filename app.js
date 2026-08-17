@@ -862,8 +862,83 @@
     requestAnimationFrame(animateVisualizer);
   }
 
+  // Background particles canvas setup
+  const bgCanvas = byId('bgCanvas');
+  const bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
+  let bgParticles = [];
+  const maxBgParticles = 45;
+
+  class BgParticle {
+    constructor() {
+      this.reset(true);
+    }
+    reset(init = false) {
+      if (!bgCanvas) return;
+      this.x = Math.random() * bgCanvas.width;
+      this.y = init ? Math.random() * bgCanvas.height : bgCanvas.height + 20;
+      this.size = Math.random() * 3 + 1.2;
+      this.speedY = Math.random() * 0.35 + 0.15;
+      this.alpha = Math.random() * 0.4 + 0.1;
+      this.fadeSpeed = Math.random() * 0.002 + 0.001;
+      this.angle = Math.random() * 360;
+      this.spin = Math.random() * 0.4 - 0.2;
+    }
+    update() {
+      if (!bgCanvas) return;
+      this.y -= this.speedY;
+      this.x += Math.sin(this.angle * Math.PI / 180) * 0.2;
+      this.angle += this.spin;
+      this.alpha -= this.fadeSpeed;
+      if (this.alpha <= 0 || this.y < -10 || this.x < -10 || this.x > bgCanvas.width + 10) {
+        this.reset(false);
+      }
+    }
+    draw(rgb) {
+      if (!bgCtx) return;
+      bgCtx.save();
+      bgCtx.beginPath();
+      const grad = bgCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
+      grad.addColorStop(0, `rgba(${rgb}, ${this.alpha})`);
+      grad.addColorStop(1, `rgba(${rgb}, 0)`);
+      bgCtx.fillStyle = grad;
+      bgCtx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+      bgCtx.fill();
+      bgCtx.restore();
+    }
+  }
+
+  function resizeBgCanvas() {
+    if (!bgCanvas) return;
+    bgCanvas.width = window.innerWidth;
+    bgCanvas.height = window.innerHeight;
+  }
+
+  function initBgParticles() {
+    if (!bgCanvas) return;
+    bgParticles = [];
+    for (let i = 0; i < maxBgParticles; i++) {
+      bgParticles.push(new BgParticle());
+    }
+  }
+
+  function animateBgParticles() {
+    if (!bgCtx || !bgCanvas) return;
+    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+    
+    const deity = currentDeity();
+    const rgb = deity.accentRgb || '255, 130, 37';
+    
+    bgParticles.forEach(p => {
+      p.update();
+      p.draw(rgb);
+    });
+    
+    requestAnimationFrame(animateBgParticles);
+  }
+
   window.addEventListener('resize', () => {
     initVisualizer();
+    resizeBgCanvas();
   });
 
   // Setup loop
@@ -874,6 +949,11 @@
   renderSleepTimer();
   initVisualizer();
   animateVisualizer();
+  
+  // Initialize and start background particles
+  resizeBgCanvas();
+  initBgParticles();
+  animateBgParticles();
   
   // Random listener heartbeats every 8 seconds
   setInterval(mockListenerHeartbeat, 8000);
