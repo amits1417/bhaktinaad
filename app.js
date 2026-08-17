@@ -357,7 +357,7 @@
     hanuman: 'जय श्री राम जय वीर हनुमान 🐒',
     durga: 'ॐ दुं दुर्गायै नमः 🔱',
     shanidev: 'ॐ शं शनैश्चराय नमः ⚖️',
-    saibaba: 'ॐ साईं राम · सबका मालिक एक 🌸',
+    saibaba: 'ॐ साईं राम 🌸',
     vishnu: 'ॐ नमो भगवते वासुदेवाय 🪷'
   };
 
@@ -373,7 +373,12 @@
     el.deityEnglishName.textContent = deity.name === 'Durga' ? 'Goddess Durga' : `Lord ${deity.name}`;
 
     const chant = sacredChants[deity.key] || 'ॐ 🌺 🔱 🪷';
-    const repeated = Array(6).fill(chant).join('   ·   ');
+    
+    // Equalize speed by repeating the text to a uniform character length (~200 chars)
+    const targetLength = 200;
+    const repeatCount = Math.max(2, Math.floor(targetLength / chant.length));
+    const repeated = Array(repeatCount).fill(chant).join('   ·   ');
+    
     const marqueeEl = byId('marqueeContent');
     if (marqueeEl) {
       marqueeEl.textContent = repeated + '   ·   ' + repeated;

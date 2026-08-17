@@ -315,6 +315,19 @@ button { color: inherit; border: none; background: transparent; cursor: pointer;
   color: #ffbfc8;
   text-shadow: 0 2px 0 #40040f, 0 5px 0 #280108, 0 12px 28px rgba(0,0,0,.8);
 }
+[data-deity="shanidev"] .wordmark h1 {
+  color: #e0e6ff;
+  text-shadow: 0 2px 0 #0f143c, 0 5px 0 #080a21, 0 12px 28px rgba(0,0,0,.8);
+  -webkit-text-stroke: 0.5px rgba(26,35,126,.4);
+}
+[data-deity="saibaba"] .wordmark h1 {
+  color: #ffe0b2;
+  text-shadow: 0 2px 0 #5d2500, 0 5px 0 #3e1900, 0 12px 28px rgba(0,0,0,.8);
+}
+[data-deity="vishnu"] .wordmark h1 {
+  color: #fff9c4;
+  text-shadow: 0 2px 0 #4a3c00, 0 5px 0 #332900, 0 12px 28px rgba(0,0,0,.8);
+}
 
 .wordmark__english {
   margin: 16px 0 4px;
