@@ -39,8 +39,8 @@ window.DEITY_DATA = [
         "note": "Recited for peace of mind, knowledge, and success."
       },
       {
-        "id": "Gr0SavYMrU4",
-        "title": "Vakratunda Mahakaya · Lofi Remix",
+        "id": "WtGw-44BlyU",
+        "title": "Vakratunda Mahakaya · Jagjit Singh",
         "shortName": "Vakratunda Mahakaya",
         "type": "Chant",
         "subline": "Remover of Obstacles mantra",
@@ -80,7 +80,7 @@ window.DEITY_DATA = [
         "note": "Shankar Mahadevan’s powerful vocals make this stotram an unforgettable listening experience."
       },
       {
-        "id": "N4tP83R4v0w",
+        "id": "yC1zeU4gN14",
         "title": "Har Har Shambhu · Abhilipsa Panda",
         "shortName": "Har Har Shambhu",
         "type": "Bhajan",
@@ -100,8 +100,8 @@ window.DEITY_DATA = [
         "note": "Features simple pahadi folk elements combined with traditional bhajan themes."
       },
       {
-        "id": "jOn78svQNbI",
-        "title": "Shree Shiv Chalisa · Rasraj Lofi Version",
+        "id": "Ydd0cSY3I8s",
+        "title": "Shree Shiv Chalisa · Anuradha Paudwal",
         "shortName": "Shiv Chalisa",
         "type": "Chalisa",
         "subline": "Forty verses of praise for Shiva",
@@ -151,7 +151,7 @@ window.DEITY_DATA = [
         "note": "A soft, classical arrangement that is perfect for late evening meditation."
       },
       {
-        "id": "f18cpg-mTrY",
+        "id": "1qmPNot9NJs",
         "title": "Shri Krishna Govind Hare Murari · Simpal Kharel",
         "shortName": "Krishna Govind",
         "type": "Bhajan",
@@ -181,7 +181,7 @@ window.DEITY_DATA = [
         "note": "Fosters a sense of communal joy and simple devotion."
       },
       {
-        "id": "zRUuBn1M7co",
+        "id": "3SWc5G8Gx7E",
         "title": "Bhajman Radhe Govinda · Acyuta Gopi",
         "shortName": "Radhe Govinda",
         "type": "Bhajan",
@@ -212,17 +212,17 @@ window.DEITY_DATA = [
         "note": "A massive hit that brings deep peace and grandeur together."
       },
       {
-        "id": "HslGsqUOpEN",
-        "title": "Mangal Bhavan Amangal Hari · Ravindra Jain",
+        "id": "txXXRMfp12w",
+        "title": "Mangal Bhavan Amangal Hari · Devotional Lofi",
         "shortName": "Mangal Bhavan",
         "type": "Chaupai",
         "subline": "Iconic title track of Ramayan",
-        "lead": "Mangal Bhavan Amangal Hari is a sacred verse from Ramcharitmanas. Sung by Ravindra Jain for Ramanand Sagar’s Ramayan, its tune is etched in the hearts of millions.",
-        "quality": "Nostalgic, Traditional, Sacred",
-        "note": "Evokes memories of Sunday mornings in India during the late 80s."
+        "lead": "Mangal Bhavan Amangal Hari is a sacred verse from Ramcharitmanas. This lofi rendition brings a calm, modern and peaceful vibe to the classic chant.",
+        "quality": "Calm, Lofi, Nostalgic",
+        "note": "Perfect background track for evening relaxation."
       },
       {
-        "id": "zJg1Dq363k8",
+        "id": "p6rzYXD-8Ss",
         "title": "Shri Ram Chandra Kripalu · Sooryagayathri",
         "shortName": "Shri Ram Chandra",
         "type": "Stuti",
@@ -232,14 +232,14 @@ window.DEITY_DATA = [
         "note": "Very helpful for morning meditation and focusing on inner peace."
       },
       {
-        "id": "rgK6U1S0n70",
-        "title": "Bhaye Pragat Kripala · Tripti Shakya Cover",
+        "id": "asn_MEvq950",
+        "title": "Bhaye Pragat Kripala · T-Series",
         "shortName": "Bhaye Pragat",
         "type": "Stuti",
         "subline": "Shri Ram Birth Celebration song",
         "lead": "Bhaye Pragat Kripala is a traditional celebration stuti for Ram Navami describing Lord Rama’s birth to Queen Kausalya in Ayodhya, bringing joy to the worlds.",
         "quality": "Festive, Traditional, Celebratory",
-        "note": "Beautiful classical bhajan from Yuki Music."
+        "note": "Beautiful classical bhajan from T-Series Bhakti Sagar."
       }
     ]
   },
@@ -273,8 +273,8 @@ window.DEITY_DATA = [
         "note": "Recited to overcome fear, anxiety, and daily struggles."
       },
       {
-        "id": "RoE5n4g7JIU",
-        "title": "Aarti Keejeya Hanuman Lala Ki · Rasraj Lofi",
+        "id": "pAxN10tGspw",
+        "title": "Aarti Keejeya Hanuman Lala Ki · Rajshri Soul",
         "shortName": "Hanuman Aarti",
         "type": "Aarti",
         "subline": "Traditional Aarti of Hanuman",
@@ -283,14 +283,14 @@ window.DEITY_DATA = [
         "note": "Sung at the conclusion of Hanuman prayers on Tuesdays."
       },
       {
-        "id": "GN751HgzTYX",
-        "title": "Shree Bajrang Baan · Rasraj Lofi",
+        "id": "33U6rtJQJ-g",
+        "title": "Shree Bajrang Baan · Hariharan",
         "shortName": "Bajrang Baan",
         "type": "Baan",
         "subline": "The arrow of Lord Hanuman",
         "lead": "Bajrang Baan is a powerful hymn calling upon the strength and speed of Hanuman like an arrow. Recited for protection, confidence, and overcoming deep fears.",
         "quality": "Intense, Rhythmic, Protective",
-        "note": "Lofi rendition with excellent, crisp pronunciation."
+        "note": "Hariharan's powerful rendition with crisp pronunciation."
       }
     ]
   },
@@ -365,7 +365,7 @@ window.DEITY_DATA = [
         "note": "Best recited on Saturdays for peace and removal of obstacles."
       },
       {
-        "id": "LZQXQYK5AMA",
+        "id": "7pix323bCVE",
         "title": "Nilanjana Samabhasam Mantra 108 Times",
         "shortName": "Shani Mantra",
         "type": "Mantra",
@@ -427,7 +427,7 @@ window.DEITY_DATA = [
     "manifesto": "जगत के पालनहार और संरक्षक",
     "tracks": [
       {
-        "id": "rSs5NtNbsGE",
+        "id": "ibfxTYpgqAQ",
         "title": "Om Jai Jagdish Hare · Traditional Aarti",
         "shortName": "Om Jai Jagdish",
         "type": "Aarti",
