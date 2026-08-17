@@ -1593,11 +1593,11 @@ input[type="range"]::-moz-range-thumb {
   display: none !important;
 }
 
-/* Desktop Widescreen Layout: Native Landscape 16:9 Wallpaper Sizing */
+/* Desktop Widescreen Layout: Full Screen Cover with Focus on Deity Upper Body and Crown */
 @media (min-width: 961px) {
   .background__layer {
     background-size: cover !important;
-    background-position: center center !important; /* Native widescreen center alignment */
+    background-position: center 38% !important; /* Shift cover image slightly down to keep face and crown perfectly centered and visible on widescreen */
   }
 }
 
