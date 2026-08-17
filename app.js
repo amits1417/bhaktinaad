@@ -52,6 +52,7 @@
     play: byId('playBtn'),
     previous: byId('trackPrevious'),
     next: byId('trackNext'),
+    loopBtn: byId('loopBtn'),
     timerBtn: byId('timerBtn'),
     timerBadge: byId('timerBadge'),
     timerMenu: byId('timerMenu'),
@@ -87,7 +88,23 @@
     volumeSlider: byId('volumeSlider')
   };
 
-  let deityIndex = storedDeityIndex();
+  function getDeityIndexByDay() {
+    const day = new Date().getDay(); // 0: Sun, 1: Mon, ... 6: Sat
+    const map = {
+      0: 'rama',
+      1: 'shiva',
+      2: 'hanuman',
+      3: 'durga',
+      4: 'saibaba',
+      5: 'vishnu',
+      6: 'shanidev'
+    };
+    const targetKey = map[day];
+    const idx = deities.findIndex(d => d.key === targetKey);
+    return idx !== -1 ? idx : 0;
+  }
+
+  let deityIndex = getDeityIndexByDay();
   let trackIndex = storedTrackIndex(deityIndex);
   let activeArt = 'A';
   let player = null;
@@ -142,6 +159,7 @@
   
   let volume = storedVolume();
   let isMuted = false;
+  let isLooping = false;
   let consecutiveErrors = 0;
 
   const currentDeity = () => deities[deityIndex];
@@ -331,6 +349,18 @@
     renderKnowledge();
   }
 
+  const sacredChants = {
+    ganesha: 'ॐ गं गणपतये नमः 🌺 OM GAN GANAPATAYE NAMAHA',
+    shiva: 'ॐ नमः शिवाय 🔱 OM NAMAH SHIVAYA',
+    krishna: 'हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे · हरे राम हरे राम राम राम हरे हरे 🪈 HARE KRISHNA HARE RAMA',
+    rama: 'हरे राम हरे राम राम राम हरे हरे 🏹 JAI SHREE RAM',
+    hanuman: 'जय श्री राम जय वीर हनुमान 🐒 JAI VEER HANUMAN',
+    durga: 'ॐ दुं दुर्गायै नमः 🔱 OM DUM DURGAYEI NAMAHA',
+    shanidev: 'ॐ शं शनैश्चराय नमः ⚖️ OM SHAM SHANISCHARAYA NAMAHA',
+    saibaba: 'ॐ साईं राम · सबका मालिक एक 🌸 OM SAI RAM',
+    vishnu: 'ॐ नमो भगवते वासुदेवाय 🪷 OM NAMO BHAGAVATE VASUDEVAYA'
+  };
+
   function renderDeity(immediate = false) {
     const deity = currentDeity();
     el.app.dataset.deity = deity.key;
@@ -341,6 +371,13 @@
     el.manifestoLbl.textContent = deity.manifesto;
     el.deityHindiName.innerHTML = `<span>${deity.hindi}</span>`;
     el.deityEnglishName.textContent = deity.name === 'Durga' ? 'Goddess Durga' : `Lord ${deity.name}`;
+
+    const chant = sacredChants[deity.key] || 'ॐ 🌺 🔱 🪷';
+    const repeated = Array(6).fill(chant).join('   ·   ');
+    const marqueeEl = byId('marqueeContent');
+    if (marqueeEl) {
+      marqueeEl.textContent = repeated + '   ·   ' + repeated;
+    }
 
     setArtwork(deity.art, immediate);
     renderTrack();
@@ -674,6 +711,12 @@
     else openList();
   }
 
+  function toggleLoop() {
+    isLooping = !isLooping;
+    el.loopBtn.classList.toggle('is-active', isLooping);
+    toast(isLooping ? 'Loop mode enabled' : 'Loop mode disabled');
+  }
+
   function openKnowledge() {
     closeList();
     closeTimerMenu();
@@ -800,7 +843,12 @@
       setPlaying(false);
     }
     if (event.data === window.YT.PlayerState.ENDED) {
-      selectTrack(trackIndex + 1, true); // Play next song
+      if (isLooping) {
+        player.seekTo(0, true);
+        player.playVideo();
+      } else {
+        selectTrack(trackIndex + 1, true); // Play next song
+      }
     }
   }
 
@@ -871,6 +919,7 @@
   el.soundGate.addEventListener('click', enterWithSound);
   el.previous.addEventListener('click', () => selectTrack(trackIndex - 1, true));
   el.next.addEventListener('click', () => selectTrack(trackIndex + 1, true));
+  el.loopBtn.addEventListener('click', toggleLoop);
   el.timerBtn.addEventListener('click', toggleTimerMenu);
   el.timerClose.addEventListener('click', closeTimerMenu);
   
@@ -1307,7 +1356,14 @@
   
   // Native audio event listeners
   nativeAudio.addEventListener('ended', () => {
-    selectTrack(trackIndex + 1, true);
+    if (isLooping) {
+      nativeAudio.currentTime = 0;
+      nativeAudio.play()
+        .then(() => setPlaying(true))
+        .catch((e) => console.error(e));
+    } else {
+      selectTrack(trackIndex + 1, true);
+    }
   });
 
   loadYouTubeScript();

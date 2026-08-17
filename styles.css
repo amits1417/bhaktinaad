@@ -1445,4 +1445,51 @@ input[type="range"]::-moz-range-thumb {
   opacity: 0.8;
 }
 
+/* Sacred Marquee Banner Chants */
+.sacred-marquee {
+  position: fixed;
+  top: 76px; /* right below the topbar */
+  left: 0;
+  width: 100vw;
+  height: 28px;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(12,6,4,0) 0%, rgba(12,6,4,0.3) 15%, rgba(12,6,4,0.3) 85%, rgba(12,6,4,0) 100%);
+  border-top: 1px solid rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  display: flex;
+  align-items: center;
+}
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee-scroll 32s linear infinite;
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  opacity: 0.65;
+  text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
+  transition: color 0.5s, text-shadow 0.5s;
+}
+@keyframes marquee-scroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Loop Toggle Active State */
+.controls .loop-toggle.is-active {
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), .12);
+}
+
+@media (max-width: 960px) {
+  .sacred-marquee {
+    top: 64px; /* adjust below topbar on mobile */
+  }
+}
+
 

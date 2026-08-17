@@ -55,6 +55,10 @@
       </div>
     </header>
 
+    <div class="sacred-marquee" id="sacredMarquee" aria-hidden="true">
+      <div class="marquee-content" id="marqueeContent"></div>
+    </div>
+
     <main class="scene" id="swipeArea">
       <div class="scene-content">
         <section class="wordmark" aria-live="polite">
@@ -133,6 +137,9 @@
             </button>
             <button id="trackNext" type="button" aria-label="Next track">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+            </button>
+            <button class="loop-toggle" id="loopBtn" type="button" aria-label="Toggle loop song">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
             </button>
             <button class="timer-toggle" id="timerBtn" type="button" aria-label="Set sleep timer" aria-controls="timerMenu" aria-expanded="false">
               <span class="timer-toggle__icon" aria-hidden="true"></span>
