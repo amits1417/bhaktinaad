@@ -1593,35 +1593,11 @@ input[type="range"]::-moz-range-thumb {
   display: none !important;
 }
 
-/* Desktop Widescreen Layout: Cinematic Blurred Background + Centered Crisp Deity */
+/* Desktop Widescreen Layout: Full Screen Cover with Focus on Deity Upper Body and Crown */
 @media (min-width: 961px) {
   .background__layer {
-    background-size: cover !important; /* Ensure background is loaded and inherits correctly */
-  }
-  
-  /* Blurred background cover to fill landscape screen */
-  .background__layer::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: -40px !important; /* expand to hide blur artifacts */
-    background-image: inherit !important;
     background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    filter: blur(35px) brightness(0.55) saturate(120%) !important;
-    z-index: 1 !important;
-  }
-  
-  /* Crisp, centered, uncropped deity in foreground */
-  .background__layer::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: inherit !important;
-    background-size: contain !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    z-index: 2 !important;
+    background-position: center 38% !important; /* Shift cover image slightly down to keep face and crown perfectly centered and visible on widescreen */
   }
 }
 
