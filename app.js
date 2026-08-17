@@ -94,6 +94,42 @@
   let playerReady = false;
   let playing = false;
   let changing = false;
+
+  const nativeAudio = new Audio();
+  let audioCtx = null;
+  let analyser = null;
+  let source = null;
+  let dataArray = null;
+
+  function isDirectAudio(urlOrId) {
+    if (!urlOrId) return false;
+    const clean = urlOrId.toLowerCase().trim();
+    return (
+      clean.endsWith('.mp3') || 
+      clean.endsWith('.m4a') || 
+      clean.endsWith('.wav') || 
+      clean.endsWith('.ogg') ||
+      (clean.startsWith('http') && (clean.includes('/mp3') || clean.includes('/audio') || clean.includes('.mp3'))) ||
+      clean.startsWith('audio/')
+    );
+  }
+
+  function initWebAudio() {
+    if (audioCtx) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      const bufferLength = analyser.frequencyBinCount;
+      dataArray = new Uint8Array(bufferLength);
+      source = audioCtx.createMediaElementSource(nativeAudio);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+    } catch (e) {
+      console.warn('Web Audio API initialized on user interaction:', e);
+    }
+  }
   
   let touchX = 0;
   let touchY = 0;
@@ -339,34 +375,69 @@
     if (playerReady && player) {
       player.setVolume(isMuted ? 0 : volume);
     }
+    nativeAudio.volume = isMuted ? 0 : volume / 100;
     updateVolumeUI();
   }
 
-  // YouTube IFrame API Control
+  // YouTube IFrame API and Native Audio Control
   function attemptAutoplay() {
-    if (!playerReady || !player) return;
     clearTimeout(autoplayTimer);
-    player.loadVideoById(currentTrack().id);
-    applyVolume();
-    autoplayTimer = setTimeout(() => {
-      if (!playing) showSoundGate();
-    }, 1800);
+    const track = currentTrack();
+    
+    if (isDirectAudio(track.id)) {
+      if (playerReady && player) player.pauseVideo();
+      nativeAudio.src = track.id;
+      nativeAudio.load();
+      initWebAudio();
+      applyVolume();
+      
+      nativeAudio.play()
+        .then(() => setPlaying(true))
+        .catch(() => showSoundGate());
+    } else {
+      nativeAudio.pause();
+      if (!playerReady || !player) return;
+      player.loadVideoById(track.id);
+      applyVolume();
+      autoplayTimer = setTimeout(() => {
+        if (!playing) showSoundGate();
+      }, 1800);
+    }
   }
 
   function cueSelected(autoplay) {
-    if (!player) return;
-    if (autoplay) {
-      try {
-        player.loadVideoById(currentTrack().id);
+    const track = currentTrack();
+    
+    if (isDirectAudio(track.id)) {
+      if (playerReady && player) player.pauseVideo();
+      nativeAudio.src = track.id;
+      nativeAudio.load();
+      
+      if (autoplay) {
+        initWebAudio();
         applyVolume();
-      } catch (e) {
-        console.error(e);
+        nativeAudio.play()
+          .then(() => setPlaying(true))
+          .catch(() => setPlaying(false));
+      } else {
+        setPlaying(false);
       }
     } else {
-      try {
-        player.cueVideoById(currentTrack().id);
-      } catch (e) {
-        console.error(e);
+      nativeAudio.pause();
+      if (!player) return;
+      if (autoplay) {
+        try {
+          player.loadVideoById(track.id);
+          applyVolume();
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        try {
+          player.cueVideoById(track.id);
+        } catch (e) {
+          console.error(e);
+        }
       }
     }
   }
@@ -409,6 +480,22 @@
   }
 
   function togglePlayback() {
+    const track = currentTrack();
+    if (isDirectAudio(track.id)) {
+      if (playing) {
+        nativeAudio.pause();
+        setPlaying(false);
+      } else {
+        initWebAudio();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        applyVolume();
+        nativeAudio.play()
+          .then(() => setPlaying(true))
+          .catch((e) => console.error(e));
+      }
+      return;
+    }
+    
     if (!playerReady || !player) {
       toast('Connecting to temple speaker…');
       return;
@@ -433,8 +520,20 @@
 
   function enterWithSound() {
     hideSoundGate();
+    const track = currentTrack();
+    if (isDirectAudio(track.id)) {
+      nativeAudio.src = track.id;
+      nativeAudio.load();
+      initWebAudio();
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      applyVolume();
+      nativeAudio.play()
+        .then(() => setPlaying(true))
+        .catch((e) => console.error(e));
+      return;
+    }
     if (!playerReady || !player) return;
-    player.loadVideoById(currentTrack().id);
+    player.loadVideoById(track.id);
     applyVolume();
     player.playVideo();
   }
@@ -800,16 +899,27 @@
   el.timeline.addEventListener('input', () => {
     const val = Number(el.timeline.value) / 10;
     el.timeline.style.setProperty('--progress', `${val}%`);
-    if (playerReady && player) {
+    const track = currentTrack();
+    if (isDirectAudio(track.id)) {
+      el.currentTime.textContent = formatTime((val / 100) * nativeAudio.duration);
+    } else if (playerReady && player) {
       el.currentTime.textContent = formatTime((val / 100) * player.getDuration());
     }
   });
 
   el.timeline.addEventListener('change', () => {
-    if (!playerReady || !player) return;
-    const dur = player.getDuration();
-    if (dur > 0) {
-      player.seekTo((Number(el.timeline.value) / 1000) * dur, true);
+    const track = currentTrack();
+    if (isDirectAudio(track.id)) {
+      const dur = nativeAudio.duration;
+      if (dur > 0) {
+        nativeAudio.currentTime = (Number(el.timeline.value) / 1000) * dur;
+      }
+    } else {
+      if (!playerReady || !player) return;
+      const dur = player.getDuration();
+      if (dur > 0) {
+        player.seekTo((Number(el.timeline.value) / 1000) * dur, true);
+      }
     }
   });
 
@@ -889,15 +999,31 @@
   // Track ticker intervals
   setInterval(() => {
     tickClock();
-    if (!playerReady || !player || document.activeElement === el.timeline) return;
-    const dur = player.getDuration();
-    const cur = player.getCurrentTime();
-    if (dur > 0) {
-      const progress = Math.min(1000, Math.max(0, (cur / dur) * 1000));
-      el.timeline.value = progress;
-      el.timeline.style.setProperty('--progress', `${progress / 10}%`);
-      el.currentTime.textContent = formatTime(cur);
-      el.duration.textContent = formatTime(dur);
+    if (document.activeElement === el.timeline) return;
+    const track = currentTrack();
+    const isDirect = isDirectAudio(track.id);
+    
+    if (isDirect) {
+      const dur = nativeAudio.duration;
+      const cur = nativeAudio.currentTime;
+      if (dur > 0) {
+        const progress = Math.min(1000, Math.max(0, (cur / dur) * 1000));
+        el.timeline.value = progress;
+        el.timeline.style.setProperty('--progress', `${progress / 10}%`);
+        el.currentTime.textContent = formatTime(cur);
+        el.duration.textContent = formatTime(dur);
+      }
+    } else {
+      if (!playerReady || !player) return;
+      const dur = player.getDuration();
+      const cur = player.getCurrentTime();
+      if (dur > 0) {
+        const progress = Math.min(1000, Math.max(0, (cur / dur) * 1000));
+        el.timeline.value = progress;
+        el.timeline.style.setProperty('--progress', `${progress / 10}%`);
+        el.currentTime.textContent = formatTime(cur);
+        el.duration.textContent = formatTime(dur);
+      }
     }
   }, 400);
 
@@ -920,32 +1046,44 @@
 
   function animateVisualizer() {
     const volFactor = isMuted ? 0 : volume / 100;
+    const track = currentDeity() ? currentTrack() : null;
+    const isDirect = track ? isDirectAudio(track.id) : false;
+    
+    if (isDirect && playing && analyser && dataArray) {
+      analyser.getByteFrequencyData(dataArray);
+    }
     
     vBars.forEach((bar, index) => {
       let targetScale = 0.08;
       
       if (playing && volFactor > 0) {
-        const time = Date.now() * 0.004;
-        const total = vBars.length;
-        const pct = index / total;
-        
-        let base = 0.08;
-        if (pct < 0.15) {
-          // Bass: slow, heavy thumps
-          base = Math.sin(time * 1.6 + index * 0.4) * 0.35 + 0.45;
-          base += Math.random() * 0.2;
-        } else if (pct < 0.70) {
-          // Mids: voice/melodic activity
-          base = Math.sin(time * 2.8 + index * 0.15) * 0.28 + 0.32;
-          base += Math.random() * 0.16;
+        if (isDirect && analyser && dataArray) {
+          const total = vBars.length;
+          const pct = index / total;
+          const freqIndex = Math.floor(pct * dataArray.length * 0.7);
+          const rawValue = dataArray[freqIndex] || 0;
+          
+          targetScale = 0.08 + (rawValue / 255) * 0.88 * volFactor;
         } else {
-          // Treble: rapid high-freq spikes
-          base = Math.sin(time * 5.5 + index * 0.08) * 0.16 + 0.22;
-          base += Math.random() * 0.12;
+          const time = Date.now() * 0.004;
+          const total = vBars.length;
+          const pct = index / total;
+          
+          let base = 0.08;
+          if (pct < 0.15) {
+            base = Math.sin(time * 1.6 + index * 0.4) * 0.35 + 0.45;
+            base += Math.random() * 0.2;
+          } else if (pct < 0.70) {
+            base = Math.sin(time * 2.8 + index * 0.15) * 0.28 + 0.32;
+            base += Math.random() * 0.16;
+          } else {
+            base = Math.sin(time * 5.5 + index * 0.08) * 0.16 + 0.22;
+            base += Math.random() * 0.12;
+          }
+          
+          const volumeMultiplier = 0.15 + 0.85 * volFactor;
+          targetScale = Math.max(0.08, base * volumeMultiplier);
         }
-        
-        const volumeMultiplier = 0.15 + 0.85 * volFactor;
-        targetScale = Math.max(0.08, base * volumeMultiplier);
       }
       
       const currentTransform = bar.style.transform || 'scaleY(0.08)';
@@ -1162,8 +1300,10 @@
   initBgParticles();
   animateBgParticles();
   
-  // Random listener heartbeats every 8 seconds
-  setInterval(mockListenerHeartbeat, 8000);
-  
+  // Native audio event listeners
+  nativeAudio.addEventListener('ended', () => {
+    selectTrack(trackIndex + 1, true);
+  });
+
   loadYouTubeScript();
 })();

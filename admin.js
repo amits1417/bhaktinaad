@@ -137,10 +137,29 @@
     const subline = rawSubline || 'Devotional Melody';
     const lead = rawLead || `${shortName} is a beautiful ${type} dedicated to Lord ${deityKey.toUpperCase()}.`;
 
-    const id = getYouTubeId(rawUrl);
-    if (!id || id.length !== 11) {
-      toast('Invalid YouTube Link/ID!');
-      return;
+    function isDirectAudio(urlOrId) {
+      if (!urlOrId) return false;
+      const clean = urlOrId.toLowerCase().trim();
+      return (
+        clean.endsWith('.mp3') || 
+        clean.endsWith('.m4a') || 
+        clean.endsWith('.wav') || 
+        clean.endsWith('.ogg') ||
+        (clean.startsWith('http') && (clean.includes('/mp3') || clean.includes('/audio') || clean.includes('.mp3'))) ||
+        clean.startsWith('audio/')
+      );
+    }
+
+    let id = '';
+    const isDirect = isDirectAudio(rawUrl);
+    if (isDirect) {
+      id = rawUrl.trim();
+    } else {
+      id = getYouTubeId(rawUrl);
+      if (!id || id.length !== 11) {
+        toast('Invalid YouTube Link or Audio Path!');
+        return;
+      }
     }
 
     if (customSongs.some(s => s.id === id)) {
