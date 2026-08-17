@@ -350,15 +350,15 @@
   }
 
   const sacredChants = {
-    ganesha: 'ॐ गं गणपतये नमः 🌺 OM GAN GANAPATAYE NAMAHA',
-    shiva: 'ॐ नमः शिवाय 🔱 OM NAMAH SHIVAYA',
-    krishna: 'हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे · हरे राम हरे राम राम राम हरे हरे 🪈 HARE KRISHNA HARE RAMA',
-    rama: 'हरे राम हरे राम राम राम हरे हरे 🏹 JAI SHREE RAM',
-    hanuman: 'जय श्री राम जय वीर हनुमान 🐒 JAI VEER HANUMAN',
-    durga: 'ॐ दुं दुर्गायै नमः 🔱 OM DUM DURGAYEI NAMAHA',
-    shanidev: 'ॐ शं शनैश्चराय नमः ⚖️ OM SHAM SHANISCHARAYA NAMAHA',
-    saibaba: 'ॐ साईं राम · सबका मालिक एक 🌸 OM SAI RAM',
-    vishnu: 'ॐ नमो भगवते वासुदेवाय 🪷 OM NAMO BHAGAVATE VASUDEVAYA'
+    ganesha: 'ॐ गं गणपतये नमः 🌺',
+    shiva: 'ॐ नमः शिवाय 🔱',
+    krishna: 'हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे · हरे राम हरे राम राम राम हरे हरे 🪈',
+    rama: 'श्री राम जय राम जय जय राम 🏹',
+    hanuman: 'जय श्री राम जय वीर हनुमान 🐒',
+    durga: 'ॐ दुं दुर्गायै नमः 🔱',
+    shanidev: 'ॐ शं शनैश्चराय नमः ⚖️',
+    saibaba: 'ॐ साईं राम · सबका मालिक एक 🌸',
+    vishnu: 'ॐ नमो भगवते वासुदेवाय 🪷'
   };
 
   function renderDeity(immediate = false) {

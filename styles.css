@@ -1451,28 +1451,30 @@ input[type="range"]::-moz-range-thumb {
   top: 76px; /* right below the topbar */
   left: 0;
   width: 100vw;
-  height: 28px;
+  height: 32px;
   overflow: hidden;
   white-space: nowrap;
   z-index: 10;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(12,6,4,0) 0%, rgba(12,6,4,0.3) 15%, rgba(12,6,4,0.3) 85%, rgba(12,6,4,0) 100%);
-  border-top: 1px solid rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.03);
+  background: rgba(12, 6, 4, 0.78) !important;
+  backdrop-filter: blur(12px) !important;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   display: flex;
   align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .marquee-content {
   display: inline-block;
   white-space: nowrap;
-  animation: marquee-scroll 32s linear infinite;
+  animation: marquee-scroll 75s linear infinite;
   font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   color: var(--accent);
-  opacity: 0.65;
-  text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
+  opacity: 0.95;
+  text-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
   transition: color 0.5s, text-shadow 0.5s;
 }
 @keyframes marquee-scroll {
