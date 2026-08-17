@@ -1488,6 +1488,10 @@ input[type="range"]::-moz-range-thumb {
   .sacred-marquee {
     top: 64px; /* adjust below topbar on mobile */
   }
+  /* Shift Rama's background horizontally to center him on mobile */
+  [data-deity="rama"] .background__layer {
+    background-position: 20% center !important;
+  }
 }
 
 /* Shani Dev Light Cyan Marquee Override for High Contrast */
