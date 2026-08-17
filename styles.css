@@ -42,7 +42,7 @@ button { color: inherit; border: none; background: transparent; cursor: pointer;
 .background__layer {
   opacity: 0;
   background-position: center center !important;
-  background-size: contain !important;
+  background-size: cover !important;
   background-repeat: no-repeat !important;
   transform: scale(1.05);
   transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 12s ease-out;
@@ -1587,6 +1587,13 @@ input[type="range"]::-moz-range-thumb {
 /* Hide track form type and significance link line */
 .teaching-line {
   display: none !important;
+}
+
+/* Desktop Widescreen Layout Background Focus Shifter */
+@media (min-width: 961px) {
+  .background__layer {
+    background-position: center 18% !important; /* Shift cover background upwards to keep deity face and crown in view */
+  }
 }
 
 
